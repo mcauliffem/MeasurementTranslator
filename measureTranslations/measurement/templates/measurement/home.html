@@ -1,0 +1,16 @@
+{% extends "measurement/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h2> Translate your measurements: </h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Translate Measurements</legend>
+        {{ form|crispy }}
+    </fieldset>
+    <div class="form-group">
+        <button class="btn-outline-info" type="submit">Translate</button>
+    </div>
+</form>
+{% endblock content %}
