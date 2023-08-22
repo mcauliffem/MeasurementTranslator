@@ -50,7 +50,7 @@ def home(request):
                 else:
                     f_s = f'{e.number_to_words(f)} {u1}'
             if imbalance:
-                ut_s = 'Numerator should be larger than Denominator'
+                ut_s = 'Numerator should be smaller than Denominator'
             else:
                 ut_s = f'{f_s}{i_s}{fraction}'
             es_s = GoogleTranslator(source='en', target='es').translate(ut_s)
