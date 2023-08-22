@@ -38,7 +38,7 @@ def home(request):
                 if d != 1:
                     fraction = convert_denominator(fraction,request.POST['numerator'],d)
 
-            ut_s = f'{f_s}{i_s}{fraction} {u2}'
+            ut_s = f'{f_s}{i_s}{fraction} {u2_s}'
             es_s = GoogleTranslator(source='en', target='es').translate(ut_s)
             uk_s = GoogleTranslator(source='en', target='uk').translate(ut_s)
             messages.success(request, f'English: {ut_s}')
