@@ -29,19 +29,30 @@ def home(request):
             n_s = ''
             fraction = ''
             u2 = 'inch'
+            imbalance = False
             if n != 0:
                 n_s = e.number_to_words(n)
                 u2_s = e. plural(u2, n)
                 d = int(request.POST['denominator'])
+                if n >= d:
+                    imbalance = True
                 if i != 0:
                     fraction = f' and {n_s}'
                 else:
                     fraction = n_s
                 if d != 1:
                     fraction = convert_denominator(fraction,n,d)
+                    fraction = f'{fraction} {u2_s}'
             else:
-                u2_s = e. plural(u2, i)
-            ut_s = f'{f_s}{i_s}{fraction} {u2_s}'
+                if i != 0:
+                    u2_s = e. plural(u2, i)
+                    i_s = f'{i_s} {u2_s}'
+                else:
+                    f_s = f'{e.number_to_words(f)} {u1}'
+            if imbalance:
+                ut_s = 'Numerator should be larger than Denominator'
+            else:
+                ut_s = f'{f_s}{i_s}{fraction}'
             es_s = GoogleTranslator(source='en', target='es').translate(ut_s)
             uk_s = GoogleTranslator(source='en', target='uk').translate(ut_s)
             messages.success(request, f'English: {ut_s}')
