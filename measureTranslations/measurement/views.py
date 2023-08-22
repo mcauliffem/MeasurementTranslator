@@ -14,17 +14,29 @@ def home(request):
         if form.is_valid():
             messages.success(request, f'Translating your measurement!')
             e = inflect.engine()
-            f = e.number_to_words(request.POST['feet'])
-            u1 = e.plural('foot', request.POST['feet'])
-            i = e.number_to_words(request.POST['inches'])
-            n = e.number_to_words(request.POST['numerator'])
-            d = request.POST['denominator']
-            fraction = n
-            if d != 1:
-                fraction = convert_denominator(fraction,request.POST['numerator'],d)
+            f = int(request.POST['feet'])
+            f_s = ''
+            if f != 0:
+                f_s = e.number_to_words(f)
+                u1 = e.plural('foot', request.POST['feet'])
+                f_s = f'{f_s} {u1}, '
+            i = int(request.POST['inches'])
+            i_s = ''
+            if i != 0:
+                i_s = e.number_to_words(i)
+                i_s = f'{i_s} and '
+            
+            n = request.POST['numerator']
+            n_s = ''
+            fraction = ''
+            if n != 0:
+                n_s = e.number_to_words(n)
+                d = request.POST['denominator']
+                fraction = n_s
+                if d != 1:
+                    fraction = convert_denominator(fraction,request.POST['numerator'],d)
 
-            u2 = 'inches'
-            ut_s = f'{f} {u1}, {i} and {fraction} {u2}'
+            ut_s = f'{f_s}{i_s}{fraction} inches'
             es_s = GoogleTranslator(source='en', target='es').translate(ut_s)
             uk_s = GoogleTranslator(source='en', target='uk').translate(ut_s)
             messages.success(request, f'English: {ut_s}')
