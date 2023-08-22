@@ -48,7 +48,10 @@ def home(request):
                     u2_s = e. plural(u2, i)
                     i_s = f'{i_s} {u2_s}'
                 else:
-                    f_s = f'{e.number_to_words(f)} {u1}'
+                    if f != 0:
+                        f_s = f'{e.number_to_words(f)} {u1}'
+                    else:
+                        f_s = "Empty Measurement"
             if imbalance:
                 ut_s = 'Numerator should be smaller than Denominator'
             else:
