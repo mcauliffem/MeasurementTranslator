@@ -29,14 +29,16 @@ def home(request):
             n = request.POST['numerator']
             n_s = ''
             fraction = ''
+            u2 = 'inch'
             if n != 0:
                 n_s = e.number_to_words(n)
+                u2_s = e. plural(u2, n)
                 d = request.POST['denominator']
                 fraction = n_s
                 if d != 1:
                     fraction = convert_denominator(fraction,request.POST['numerator'],d)
 
-            ut_s = f'{f_s}{i_s}{fraction} inches'
+            ut_s = f'{f_s}{i_s}{fraction} {u2}'
             es_s = GoogleTranslator(source='en', target='es').translate(ut_s)
             uk_s = GoogleTranslator(source='en', target='uk').translate(ut_s)
             messages.success(request, f'English: {ut_s}')
